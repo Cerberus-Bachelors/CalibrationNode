@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>motorcalibration</name>
+  <version>0.0.0</version>
+  <description>Python ROS 2 package for calibrating 12 motors using ODrive boards</description>
+  <maintainer email="magnus.mortensen@hotmail.no">maggebag</maintainer>
+  <license>Apache-2.0</license>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>ODrive</depend>
+  <depend>cerberus_msgs</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
