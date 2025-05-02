@@ -23,6 +23,8 @@ setup(
     entry_points={
         'console_scripts': [
             'calibrate_motors = motorcalibration.motor_calibrator:main',
+            'config_drivers = motorcalibration.config_drivers:main',
         ],
     },
 )
+
