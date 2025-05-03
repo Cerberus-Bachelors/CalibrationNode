@@ -8,6 +8,10 @@ import time
 
 from cerberus_msgs.msg import EspCommands
 
+class CalibrationAbort(Exception):
+    """Used to exit calibration early without killing the node."""
+    pass
+
 class motorCalibrator(Node):
     def __init__(self):
         super().__init__(
@@ -101,13 +105,12 @@ class motorCalibrator(Node):
             
             if existing_error:
                 self.get_logger().warn(f'Calibration error in {group_name}. Aborting sequence.')
-                self.calibration_failed = True
+                raise CalibrationAbort(f'{group_name} group has calibration error.')
                 return
             
     def jog_motors(self, group_name, odrive_list, position):
         self.get_logger().info(f'Jogging {group_name} motors')
 
-        
         for serial, odrv in odrive_list:
             label = self.odrive_serials.get(serial, serial)
 
@@ -147,17 +150,24 @@ class motorCalibrator(Node):
 
 
     def calibrate_all_motors(self):
-        self.calibration_failed = False
-        if not self.calibration_failed:
+
+        try:
             self.get_logger().info('Starting calibration sequence')
             self.calibrate_odrive_group('hip', self.hip_odrives)
-            self.jog_motors('hip', self.hip_odrives, 0.8)
+            time.sleep(0.1)
+            self.jog_motors('hip', self.hip_odrives, 0.4)
             self.calibrate_odrive_group('thigh', self.thigh_odrives)
-            self.jog_motors('thighs', self.thigh_odrives, 0.2)
+            time.sleep(0.1)
+            self.jog_motors('thighs', self.thigh_odrives, 0.6)
             self.calibrate_odrive_group('calf', self.calf_odrives)
-            self.jog_motors('calf', self.calf_odrives, 0.1)
+            time.sleep(0.1)
+            self.jog_motors('calf', self.calf_odrives, 0)
+            time.sleep(2)
+            self.jog_motors('thighs', self.thigh_odrives, -0.2)
+            time.sleep(2)
+            #self.jog_motors('hip', self.hip_odrives, -1)
 
-        else:
+        except CalibrationAbort:
             self.get_logger().error('Aborted calibration sequence')
 
         

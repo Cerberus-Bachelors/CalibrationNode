@@ -16,17 +16,14 @@ def configure_axis(axis, cpr):
     axis.encoder.config.cpr = cpr
 
     axis.controller.config.control_mode = CONTROL_MODE_POSITION_CONTROL
-    axis.controller.config.input_mode = INPUT_MODE_POS_FILTER
-    axis.controller.config.input_filter_bandwidth = 10
+    axis.controller.config.input_mode = INPUT_MODE_PASSTHROUGH
+    #axis.controller.config.input_filter_bandwidth = 0
 
-    axis.motor.config.current_lim = 25
-    axis.motor.config.calibration_current = 25
-    axis.config.calibration_lockin.current = 25
+    axis.motor.config.current_lim = 27.5
+    axis.motor.config.calibration_current = 27.5
+    axis.config.calibration_lockin.current = 27.5
 
-    #axis.config.dc_max_positive_current = 40.0
-    #axis.config.dc_max_negative_current = -10
-
-    axis.controller.config.vel_limit = 25
+    axis.controller.config.vel_limit = 12
     axis.motor.config.pole_pairs = 11
     axis.motor.config.torque_constant = 8.27/340
 
@@ -37,6 +34,10 @@ def main():
         label = config["label"]
 
         odrv = odrive.find_any(serial_number=serial, timeout=10)
+
+        # Drive specific config
+        odrv.config.dc_max_positive_current = 40.0
+        odrv.config.dc_max_negative_current = -8.0
 
         print(f"Configuring {label} axis0 with CPR {config['axis0_cpr']}")
         configure_axis(odrv.axis0, config["axis0_cpr"])

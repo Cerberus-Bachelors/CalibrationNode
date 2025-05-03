@@ -24,6 +24,9 @@ setup(
         'console_scripts': [
             'calibrate_motors = motorcalibration.motor_calibrator:main',
             'config_drivers = motorcalibration.config_drivers:main',
+            'idle_drivers = motorcalibration.idle_drives:main',
+            'closed_loop_drivers = motorcalibration.closed_loop_drives:main',
+            'jog_group = motorcalibration.odrive_group_jogger:main',
         ],
     },
 )
