@@ -28,9 +28,7 @@
   ```bash
   ros2 run motorcalibration jog_group
   ```
-  > Note: `position` here represents **delta movement**, not an absolute target.
-
-## Example: Calibrate via Topic
+## Example: Test Commands to publish
 
 You can trigger calibration using a ROS 2 topic:
 
@@ -42,6 +40,9 @@ Command to use jog program:
 ```bash
   ros2 topic pub /jog_group cerberus_msgs/JogCommand "{group_name: 'calf', position: -2}" -1
 ```
-Note: `position` here represents **delta movement**, not an absolute target.
+> Note: `position` here represents **delta movement**, not an absolute target.
+
+## On robot startup:
+When starting the robot calibrate should be run. This is setup over esp_commands message which allows an esp32 to send an output to the program to initialise calibrate sequence. The calibrate program should be started on robot power up and will sit and wait until calibrate command is recieved.
 
 
