@@ -28,8 +28,6 @@
   ```bash
   ros2 run motorcalibration jog_group
   ```
-  > Note: `position` here represents **delta movement**, not an absolute target.
-
 ## Example: Calibrate via Topic
 
 You can trigger calibration using a ROS 2 topic:
@@ -42,6 +40,6 @@ Command to use jog program:
 ```bash
   ros2 topic pub /jog_group cerberus_msgs/JogCommand "{group_name: 'calf', position: -2}" -1
 ```
-Note: `position` here represents **delta movement**, not an absolute target.
+> Note: `position` here represents **delta movement**, not an absolute target.
 
 
