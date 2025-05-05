@@ -16,14 +16,17 @@ def configure_axis(axis, cpr):
     axis.encoder.config.cpr = cpr
 
     axis.controller.config.control_mode = CONTROL_MODE_POSITION_CONTROL
-    axis.controller.config.input_mode = INPUT_MODE_PASSTHROUGH
-    #axis.controller.config.input_filter_bandwidth = 0
+    axis.controller.config.input_mode = INPUT_MODE_POS_FILTER
+    axis.controller.config.input_filter_bandwidth = 5
 
-    axis.motor.config.current_lim = 27.5
-    axis.motor.config.calibration_current = 27.5
-    axis.config.calibration_lockin.current = 27.5
+    axis.motor.config.current_lim = 32.5
+    axis.motor.config.calibration_current = 25
+    axis.config.calibration_lockin.current = 25
 
     axis.controller.config.vel_limit = 12
+    axis.controller.config.pos_gain = 30.0  # may need tuning
+    axis.controller.config.vel_gain = 0.2  # may need tuning
+    axis.controller.config.vel_integrator_gain = 0.01 # may need tuning
     axis.motor.config.pole_pairs = 11
     axis.motor.config.torque_constant = 8.27/340
 
